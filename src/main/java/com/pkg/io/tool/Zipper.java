@@ -11,7 +11,7 @@ import java.util.zip.ZipOutputStream;
 
 import com.pkg.io.Folder;
 
-public final class ZipTool {
+public final class Zipper {
     File[] file;
 
     /**
@@ -19,7 +19,7 @@ public final class ZipTool {
      * @since 2.4
      */
 
-    public ZipTool(File... file) {
+    public Zipper(File... file) {
         this.file = file;
     }
 

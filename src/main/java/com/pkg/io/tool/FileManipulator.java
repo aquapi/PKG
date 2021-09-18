@@ -12,7 +12,7 @@ public final class FileManipulator {
     public File file;
 
     /**
-     * @param file construct new FileCoder to work with input file
+     * @param file construct new FileManipulator to work with input file
      * @throws FileNotFoundException
      * @since 1.0
      */
