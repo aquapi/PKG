@@ -14,7 +14,7 @@ class TimerTest {
 
 class AsyncTest extends AsyncScope {
     public static void main(String[] args) {
-        scope.async(9).then((Consumer<Integer>) System.out::println).handle(System.err::println);
+        scope.async(9).then((Consumer<Integer>) System.out::println).handle();
         System.out.println("Done");
     }
 }

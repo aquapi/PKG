@@ -90,6 +90,15 @@ public class Promise<T> {
     }
 
     /**
+     * @return a void promise
+     * @since 2.4
+     */
+
+    public Promise<Void> handle() {
+        return this.handle(System.err::println);
+    }
+
+    /**
      * @param i task to execute if errors aren't handle
      * @since 2.4
      */
