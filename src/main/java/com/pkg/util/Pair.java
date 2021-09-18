@@ -39,7 +39,7 @@ public final class Pair<E, D> implements Serializable, Comparable<Pair<E, D>> {
      * @since 2.0
      */
 
-    public synchronized void setpair(E val) {
+    public void setpair(E val) {
         e1 = val;
     }
 
@@ -49,7 +49,7 @@ public final class Pair<E, D> implements Serializable, Comparable<Pair<E, D>> {
      * @since 2.0
      */
 
-    public synchronized void setpair(E val1, D val2) {
+    public void setpair(E val1, D val2) {
         this.e1 = val1;
         this.e2 = val2;
     }
@@ -59,7 +59,7 @@ public final class Pair<E, D> implements Serializable, Comparable<Pair<E, D>> {
      * @since 2.0
      */
 
-    public synchronized boolean isMissing() {
+    public boolean isMissing() {
         return e1 != null && e2 != null;
     }
 
@@ -68,7 +68,7 @@ public final class Pair<E, D> implements Serializable, Comparable<Pair<E, D>> {
      * @since 2.0
      */
 
-    public synchronized boolean isEmpty() {
+    public boolean isEmpty() {
         return e1 == null && e2 == null;
     }
 
@@ -78,7 +78,7 @@ public final class Pair<E, D> implements Serializable, Comparable<Pair<E, D>> {
      * @since 2.0
      */
 
-    public synchronized <T> boolean contains(T val) {
+    public <T> boolean contains(T val) {
         return e1 == val || e2 == val;
     }
 
@@ -87,7 +87,7 @@ public final class Pair<E, D> implements Serializable, Comparable<Pair<E, D>> {
      * @since 2.0
      */
 
-    public synchronized E getFirst() {
+    public E getFirst() {
         return e1;
     }
 
@@ -96,7 +96,7 @@ public final class Pair<E, D> implements Serializable, Comparable<Pair<E, D>> {
      * @since 2.0
      */
 
-    public synchronized D getLast() {
+    public D getLast() {
         return e2;
     }
 
