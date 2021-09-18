@@ -145,7 +145,7 @@ public final class ZipTool {
         ZipInputStream zis = new ZipInputStream(new FileInputStream(zipfile));
         ZipEntry zipEntry = zis.getNextEntry();
         while (zipEntry != null) {
-            File newFile = newFile(new FileTool(zipfile).getParent(), zipEntry);
+            File newFile = newFile(new FileManipulator(zipfile).getParent(), zipEntry);
             if (zipEntry.isDirectory()) {
                 if (!newFile.isDirectory() && !newFile.mkdirs()) {
                     throw new IOException("Failed to create directory " + newFile);
@@ -182,7 +182,7 @@ public final class ZipTool {
 
     public static File packedUnzip(File zipfile) throws IOException {
         File[] all = unzip(zipfile);
-        String fl = new FileTool(all[0]).getParent().getAbsolutePath();
+        String fl = new FileManipulator(all[0]).getParent().getAbsolutePath();
         Folder d = new Folder(fl + File.separator + zipfile.getName().split(".zip")[0]);
         d.mkdirs();
         d.add(all);

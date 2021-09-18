@@ -8,7 +8,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
 
-public final class FileTool {
+public final class FileManipulator {
     public File file;
 
     /**
@@ -17,7 +17,7 @@ public final class FileTool {
      * @since 1.0
      */
 
-    public FileTool(File file) throws FileNotFoundException {
+    public FileManipulator(File file) throws FileNotFoundException {
         if (file == null) {
             throw new FileNotFoundException("No file given");
         }
@@ -30,7 +30,7 @@ public final class FileTool {
      * @since 2.1
      */
 
-    public FileTool(String filename) throws FileNotFoundException {
+    public FileManipulator(String filename) throws FileNotFoundException {
         if (filename == null || filename == "") {
             throw new FileNotFoundException("No file given");
         }
@@ -184,10 +184,10 @@ public final class FileTool {
                     File cr = new File(k + File.separator + file.getName());
                     if (!file.isDirectory()) {
                         cr.createNewFile();
-                        new FileTool(cr).clean();
-                        new FileTool(cr).add(new FileTool(file).read());
+                        new FileManipulator(cr).clean();
+                        new FileManipulator(cr).add(new FileManipulator(file).read());
                     } else {
-                        new FileTool(cr).mkdirs(file.listFiles());
+                        new FileManipulator(cr).mkdirs(file.listFiles());
                     }
                 }
             }
@@ -217,7 +217,7 @@ public final class FileTool {
                     }
                     File pt = new File(subfiles_path + g.getName());
                     pt.createNewFile();
-                    new FileTool(g).pasteTo(pt);
+                    new FileManipulator(g).pasteTo(pt);
                 }
             }
         }

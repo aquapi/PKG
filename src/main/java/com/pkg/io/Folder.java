@@ -12,7 +12,7 @@ import java.io.Serializable;
 import java.util.Arrays;
 import java.util.LinkedList;
 
-import com.pkg.io.tool.FileTool;
+import com.pkg.io.tool.FileManipulator;
 
 public class Folder implements Serializable {
     private LinkedList<File> elements = new LinkedList<>();
@@ -129,7 +129,7 @@ public class Folder implements Serializable {
 
     private LinkedList<Boolean> remkdirs() throws IOException {
         LinkedList<Boolean> task = new LinkedList<>();
-        task.add(new FileTool(cursor).deleteDirectory());
+        task.add(new FileManipulator(cursor).deleteDirectory());
         task.addAll(this.mkdirs());
         return task;
     }
@@ -239,7 +239,7 @@ public class Folder implements Serializable {
             File cr = new File(filepath);
             task.add(cr.createNewFile());
             if (el.exists()) {
-                new FileTool(el).moveTo(cr);
+                new FileManipulator(el).moveTo(cr);
                 task.add(el.delete());
             }
         }
@@ -267,7 +267,7 @@ public class Folder implements Serializable {
                     File cr = new File(name + File.separator + el.getName());
                     task.add(cr.createNewFile());
                     if (el.exists()) {
-                        new FileTool(el).moveTo(cr);
+                        new FileManipulator(el).moveTo(cr);
                         task.add(el.delete());
                     }
                 }
@@ -316,7 +316,7 @@ public class Folder implements Serializable {
 
     public LinkedList<Boolean> remkdirs(Folder parent) throws IOException {
         LinkedList<Boolean> task = new LinkedList<>();
-        task.add(new FileTool(cursor).deleteDirectory());
+        task.add(new FileManipulator(cursor).deleteDirectory());
         task.addAll(this.mkdirs(parent));
         return task;
     }
@@ -359,7 +359,7 @@ public class Folder implements Serializable {
      */
 
     public boolean extract() throws FileNotFoundException {
-        return new FileTool(ptr()).extractDirectory();
+        return new FileManipulator(ptr()).extractDirectory();
     }
 
     /**
@@ -382,7 +382,7 @@ public class Folder implements Serializable {
         next = null;
         elements = null;
         this.finalize();
-        return cursor == null ? false : new FileTool(cursor).deleteDirectory();
+        return cursor == null ? false : new FileManipulator(cursor).deleteDirectory();
     }
 
     @Override
@@ -406,7 +406,6 @@ public class Folder implements Serializable {
      * 
      * @since 1.9
      */
-
     @Serial
     private static final long serialVersionUID = 1L;
 }
