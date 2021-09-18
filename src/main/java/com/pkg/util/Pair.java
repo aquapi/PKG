@@ -39,7 +39,7 @@ public final class Pair<E, D> implements Serializable, Comparable<Pair<E, D>> {
      * @since 2.0
      */
 
-    public void setpair(E val) {
+    public void setPair(E val) {
         e1 = val;
     }
 
@@ -49,7 +49,7 @@ public final class Pair<E, D> implements Serializable, Comparable<Pair<E, D>> {
      * @since 2.0
      */
 
-    public void setpair(E val1, D val2) {
+    public void setPair(E val1, D val2) {
         this.e1 = val1;
         this.e2 = val2;
     }
