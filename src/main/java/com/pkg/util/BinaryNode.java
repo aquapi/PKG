@@ -8,12 +8,12 @@ import java.util.LinkedList;
 import java.util.Set;
 import java.util.TreeSet;
 
-public final class TreeNode<T> implements Cloneable, Serializable {
+public final class BinaryNode<T> implements Cloneable, Serializable {
     public int key;
     public T value;
     private HashMap<Integer, T> valueList = new HashMap<>();
-    public TreeNode<T> left;
-    public TreeNode<T> right;
+    public BinaryNode<T> left;
+    public BinaryNode<T> right;
 
     /**
      * create a key with no value to a binary tree with node
@@ -22,7 +22,7 @@ public final class TreeNode<T> implements Cloneable, Serializable {
      * @since 1.5
      */
 
-    public TreeNode(int key) {
+    public BinaryNode(int key) {
         this.key = key;
         value = null;
         left = right = null;
@@ -35,7 +35,7 @@ public final class TreeNode<T> implements Cloneable, Serializable {
      * @since 1.7
      */
 
-    public TreeNode(int key, T value) {
+    public BinaryNode(int key, T value) {
         this.key = key;
         this.value = value;
         left = right = null;
@@ -60,7 +60,7 @@ public final class TreeNode<T> implements Cloneable, Serializable {
      * @since 1.5
      */
 
-    private boolean isBSTStruct(TreeNode<T> node, int min, int max) {
+    private boolean isBSTStruct(BinaryNode<T> node, int min, int max) {
         return node == null ? true
                 : (node.key > max || node.key < min ? false
                         : isBSTStruct(node.left, min, node.key - 1) && isBSTStruct(node.right, node.key + 1, max));
@@ -73,7 +73,7 @@ public final class TreeNode<T> implements Cloneable, Serializable {
      * @since 1.6
      */
 
-    private boolean searchStruct(TreeNode<T> node, int key) {
+    private boolean searchStruct(BinaryNode<T> node, int key) {
         return node == null ? false
                 : (key < node.key ? searchStruct(node.left, key)
                         : (key > node.key ? searchStruct(node.right, key) : true));
@@ -96,7 +96,7 @@ public final class TreeNode<T> implements Cloneable, Serializable {
      * @since 1.6
      */
 
-    private TreeNode<T> deleteStruct(TreeNode<T> root, int key) {
+    private BinaryNode<T> deleteStruct(BinaryNode<T> root, int key) {
         if (root == null)
             return root;
         if (key < root.key)
@@ -120,7 +120,7 @@ public final class TreeNode<T> implements Cloneable, Serializable {
      * @since 1.6
      */
 
-    private int minKey(TreeNode<T> root) {
+    private int minKey(BinaryNode<T> root) {
         return root.left != null ? minKey(root.left) : root.key;
     }
 
@@ -130,7 +130,7 @@ public final class TreeNode<T> implements Cloneable, Serializable {
      * @since 1.6
      */
 
-    public TreeNode<T> delete(int key) {
+    public BinaryNode<T> delete(int key) {
         return deleteStruct(this, key);
     }
 
@@ -140,7 +140,7 @@ public final class TreeNode<T> implements Cloneable, Serializable {
      * @since 1.6
      */
 
-    private void convertToBST(TreeNode<T> root, Iterator<Integer> it) {
+    private void convertToBST(BinaryNode<T> root, Iterator<Integer> it) {
         if (root == null) {
             return;
         }
@@ -155,7 +155,7 @@ public final class TreeNode<T> implements Cloneable, Serializable {
      * @since 1.6
      */
 
-    private void extractKeys(TreeNode<T> root, Set<Integer> set) {
+    private void extractKeys(BinaryNode<T> root, Set<Integer> set) {
         if (root == null) {
             return;
         }
@@ -182,7 +182,7 @@ public final class TreeNode<T> implements Cloneable, Serializable {
      * @since 1.6
      */
 
-    private void printStruct(TreeNode<T> root) {
+    private void printStruct(BinaryNode<T> root) {
         if (root == null) {
             return;
         }
@@ -208,15 +208,15 @@ public final class TreeNode<T> implements Cloneable, Serializable {
      * @since 1.7
      */
 
-    private void flattenStruct(TreeNode<T> node) {
+    private void flattenStruct(BinaryNode<T> node) {
         if (node == null || node.left == null && node.right == null)
             return;
         if (node.left != null) {
             flattenStruct(node.left);
-            TreeNode<T> tempNode = node.right;
+            BinaryNode<T> tempNode = node.right;
             node.right = node.left;
             node.left = null;
-            TreeNode<T> curr = node.right;
+            BinaryNode<T> curr = node.right;
             while (curr.right != null) {
                 curr = curr.right;
             }
@@ -248,7 +248,7 @@ public final class TreeNode<T> implements Cloneable, Serializable {
      * @since 1.7
      */
 
-    private LinkedList<Integer> toLinkedList(TreeNode<T> root) {
+    private LinkedList<Integer> toLinkedList(BinaryNode<T> root) {
         res.clear();
         searchTree(root);
         return res;
@@ -259,7 +259,7 @@ public final class TreeNode<T> implements Cloneable, Serializable {
      * @since 1.8
      */
 
-    private void searchTree(TreeNode<T> node) {
+    private void searchTree(BinaryNode<T> node) {
         if (node != null) {
             searchTree(node.left);
             res.add(node.key);
@@ -282,7 +282,7 @@ public final class TreeNode<T> implements Cloneable, Serializable {
      * @since 1.7
      */
 
-    public TreeNode<T> clone() {
+    public BinaryNode<T> clone() {
         return this;
     }
 
@@ -344,7 +344,7 @@ public final class TreeNode<T> implements Cloneable, Serializable {
      * @since 1.7
      */
 
-    private Integer maxKey(TreeNode<T> root) {
+    private Integer maxKey(BinaryNode<T> root) {
         return root.right != null ? maxKey(root.right) : root.key;
     }
 
