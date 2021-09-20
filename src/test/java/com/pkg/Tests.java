@@ -22,10 +22,9 @@ class AsyncTest extends AsyncScope {
 
 class BlockTest {
     public static void main(String[] args) {
-        Block i = new Block(9);
-        i.addConnect(new Block(10));
-        i.addConnect(new Block(15));
-        i.connects()[1].addConnect(new Block(16));
-        System.out.println(i);
+        Block b = new Block(9);
+        b.addConnect(new Block(16));
+        b.addConnect(new Block(12));
+        System.out.println(b);
     }
 }

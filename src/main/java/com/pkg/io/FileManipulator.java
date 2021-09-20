@@ -1,4 +1,4 @@
-package com.pkg.io.tool;
+package com.pkg.io;
 
 import java.io.File;
 import java.io.FileInputStream;

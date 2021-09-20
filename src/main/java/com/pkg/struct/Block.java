@@ -98,23 +98,27 @@ public class Block {
      */
 
     public void removeConnect(Block b) {
-        Block[] remv = new Block[connectBlocks.length - 1];
-        for (int i = 0; i < remv.length; i++) {
-            if (Arrays.asList(connectBlocks).indexOf(b) >= i)
-                remv[i] = connectBlocks[i + 1];
-            else
-                remv[i] = connectBlocks[i];
-        }
-        connectBlocks = remv;
+        if (connectBlocks.length > 0) {
+            Block[] remv = new Block[connectBlocks.length - 1];
+            for (int i = 0; i < remv.length; i++) {
+                if (Arrays.asList(connectBlocks).indexOf(b) >= i)
+                    remv[i] = connectBlocks[i + 1];
+                else
+                    remv[i] = connectBlocks[i];
+            }
+            connectBlocks = remv;
 
-        Block[] remv1 = new Block[b.connectBlocks.length - 1];
-        for (int i = 0; i < remv1.length; i++) {
-            if (Arrays.asList(b.connectBlocks).indexOf(this) >= i)
-                remv1[i] = b.connectBlocks[i + 1];
-            else
-                remv1[i] = b.connectBlocks[i];
         }
-        b.connectBlocks = remv1;
+        if (b.connectBlocks.length > 0) {
+            Block[] remv1 = new Block[b.connectBlocks.length - 1];
+            for (int i = 0; i < remv1.length; i++) {
+                if (Arrays.asList(b.connectBlocks).indexOf(this) >= i)
+                    remv1[i] = b.connectBlocks[i + 1];
+                else
+                    remv1[i] = b.connectBlocks[i];
+            }
+            b.connectBlocks = remv1;
+        }
     }
 
     /**
@@ -133,13 +137,7 @@ public class Block {
      */
 
     public boolean equals(Block b) {
-        if (!b.data.equals(this.data) || b.connectBlocks.length != this.connectBlocks.length)
-            return false;
-        for (int i = 0; i < connectBlocks.length; i++) {
-            if (connectBlocks[i].data.equals(b.connectBlocks[i].data))
-                return false;
-        }
-        return true;
+        return this.data.equals(b.data);
     }
 
     /**

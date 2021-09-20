@@ -12,8 +12,6 @@ import java.io.Serializable;
 import java.util.Arrays;
 import java.util.LinkedList;
 
-import com.pkg.io.tool.FileManipulator;
-
 public class Folder implements Serializable {
     private LinkedList<File> elements = new LinkedList<>();
     private LinkedList<Folder> next = new LinkedList<>();
@@ -360,6 +358,23 @@ public class Folder implements Serializable {
 
     public boolean extract() throws FileNotFoundException {
         return new FileManipulator(ptr()).extractDirectory();
+    }
+
+    /**
+     * @return zipped file
+     * @throws IOException
+     * @since 2.4
+     */
+
+    public File zip() throws IOException {
+        Zipper p = new Zipper();
+        for (File f : files()) {
+            p.add(f);
+        }
+        for (Folder f : folders()) {
+            p.add(f.ptr());
+        }
+        return p.zipAs(name + ".zip");
     }
 
     /**

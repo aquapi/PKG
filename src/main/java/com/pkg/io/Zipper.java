@@ -1,4 +1,4 @@
-package com.pkg.io.tool;
+package com.pkg.io;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -9,10 +9,9 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 import java.util.zip.ZipOutputStream;
 
-import com.pkg.io.Folder;
-
 public final class Zipper {
     File[] file;
+    boolean stop = false;
 
     /**
      * @param file all file to be ziped
@@ -24,6 +23,21 @@ public final class Zipper {
     }
 
     /**
+     * @param f file to add
+     * @since 2.4
+     */
+
+    public void add(File f) {
+        if (stop) return;
+        File[] k = new File[file.length + 1];
+        for (int i = 0; i < file.length; i++) {
+            k[i] = file[i];
+        }
+        k[file.length] = f;
+        file = k;
+    }
+
+    /**
      * @param zipname name after zipping
      * @return ziped file
      * @throws IOException
@@ -31,18 +45,21 @@ public final class Zipper {
      */
 
     public File zipAs(String zipname) throws IOException {
+        stop = true;
         FileOutputStream fos = new FileOutputStream(zipname);
         ZipOutputStream zipOut = new ZipOutputStream(fos);
-        if (!file[0].isDirectory()) {
-            if (file.length == 1) {
-                FileInputStream fis = new FileInputStream(file[0]);
-                singleZip(zipname, fos, zipOut, fis);
-                fis.close();
+        if (file.length != 0) {
+            if (!file[0].isDirectory()) {
+                if (file.length == 1) {
+                    FileInputStream fis = new FileInputStream(file[0]);
+                    singleZip(zipname, fos, zipOut, fis);
+                    fis.close();
+                } else {
+                    multipleZip(zipname, fos, zipOut);
+                }
             } else {
-                multipleZip(zipname, fos, zipOut);
+                zipFolder(file[0], file[0].getName(), zipOut);
             }
-        } else {
-            zipFolder(file[0], file[0].getName(), zipOut);
         }
         zipOut.close();
         fos.close();
