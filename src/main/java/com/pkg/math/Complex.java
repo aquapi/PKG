@@ -3,7 +3,7 @@ package com.pkg.math;
 import com.pkg.def.Static;
 
 public final class Complex extends Number {
-    private double real, imag;
+    public double real, imag;
 
     /**
      * @param real
@@ -119,8 +119,8 @@ public final class Complex extends Number {
      * @since 1.8
      */
 
-    public boolean equals(Complex c) {
-        return c.real == this.real && c.imag == this.imag ? true : false;
+    private boolean equals(Complex c) {
+        return c.real == this.real && c.imag == this.imag;
     }
 
     /**
@@ -131,7 +131,7 @@ public final class Complex extends Number {
      */
 
     public static boolean compare(Complex x, Complex y) {
-        return x.real == y.real && x.imag == y.imag ? true : false;
+        return x.real == y.real && x.imag == y.imag;
     }
 
     /**
@@ -205,9 +205,13 @@ public final class Complex extends Number {
             return this.imag + "i";
         }
         if (this.imag < 0.0d) {
-            return this.real + " - " + -this.imag + "i";
+            return this.real + " - " + this.imag + "i";
         }
         return this.real + " + " + this.imag + "i";
+    }
+
+    public boolean equals(Object x) {
+        return x instanceof Complex ? equals((Complex) x) : false;
     }
 
     /**

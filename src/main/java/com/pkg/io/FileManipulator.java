@@ -138,8 +138,15 @@ public final class FileManipulator {
         if (dir == null || !dir.isDirectory() || !dir.exists())
             throw new IOException("cannot move this file to specified directory");
         File j = new File(dir.getAbsolutePath() + File.separator + this.file.getName());
-        j.createNewFile();
-        moveTo(j);
+        if (file.isDirectory()) {
+            new FileManipulator(j).mkdirs(this.file.listFiles());
+            this.file.delete();
+        } else {
+            j.createNewFile();
+            moveTo(j);
+            file.delete();
+        }
+        this.file = j;
     }
 
     /**

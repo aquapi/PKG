@@ -28,12 +28,32 @@ public final class Zipper {
      */
 
     public void add(File f) {
-        if (stop) return;
+        if (stop)
+            return;
         File[] k = new File[file.length + 1];
         for (int i = 0; i < file.length; i++) {
             k[i] = file[i];
         }
         k[file.length] = f;
+        file = k;
+    }
+
+    /**
+     * @param index to remove
+     * @since 2.4
+     */
+
+    public void remove(int index) {
+        if (stop)
+            return;
+        File[] k = new File[file.length - 1];
+        for (int i = 0; i < file.length; i++) {
+            if (i <= index) {
+                k[index] = file[i];
+                index++;
+            } else
+                k[i] = file[i];
+        }
         file = k;
     }
 
@@ -208,7 +228,7 @@ public final class Zipper {
 
     /**
      * @param directory parent directory
-     * @param zipEntry zip entry for file
+     * @param zipEntry  zip entry for file
      * @return new file with specified zip entry
      * @throws IOException
      * @since 2.4
