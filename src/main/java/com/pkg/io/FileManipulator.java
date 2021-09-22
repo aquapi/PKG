@@ -8,7 +8,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
 
-public final class FileManipulator {
+public class FileManipulator {
     public File file;
 
     /**
@@ -250,12 +250,11 @@ public final class FileManipulator {
     }
 
     /**
-     * @param directory target directory
-     * @return true if the directory has been deleted
+     * @return true if the directory or file has been deleted
      * @since 1.7
      */
 
-    public boolean deleteDirectory() {
+    public boolean delete() {
         return deleteDirectory(this.file);
     }
 

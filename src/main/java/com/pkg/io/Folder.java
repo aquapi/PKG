@@ -127,7 +127,7 @@ public class Folder implements Serializable {
 
     private LinkedList<Boolean> remkdirs() throws IOException {
         LinkedList<Boolean> task = new LinkedList<>();
-        task.add(new FileManipulator(cursor).deleteDirectory());
+        task.add(new FileManipulator(cursor).delete());
         task.addAll(this.mkdirs());
         return task;
     }
@@ -314,7 +314,7 @@ public class Folder implements Serializable {
 
     public LinkedList<Boolean> remkdirs(Folder parent) throws IOException {
         LinkedList<Boolean> task = new LinkedList<>();
-        task.add(new FileManipulator(cursor).deleteDirectory());
+        task.add(new FileManipulator(cursor).delete());
         task.addAll(this.mkdirs(parent));
         return task;
     }
@@ -397,7 +397,7 @@ public class Folder implements Serializable {
         next = null;
         elements = null;
         this.finalize();
-        return cursor == null ? false : new FileManipulator(cursor).deleteDirectory();
+        return cursor == null ? false : new FileManipulator(cursor).delete();
     }
 
     @Override

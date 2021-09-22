@@ -13,7 +13,7 @@ public class Promise<T> {
      * @param r supplier
      * @since 2.4
      */
-    
+
     Promise(Supplier<T> r) {
         c = CompletableFuture.supplyAsync(r);
     }
@@ -32,12 +32,12 @@ public class Promise<T> {
      */
 
     private Promise(T a) {
-        c = CompletableFuture.completedFuture(a);
+        c = CompletableFuture.supplyAsync(() -> a);
     }
 
     /**
      * @param <U> value type
-     * @param a value to be resolve
+     * @param a   value to be resolve
      * @return a promise with given value
      * @since 2.4
      */
@@ -62,7 +62,7 @@ public class Promise<T> {
 
     /**
      * @param <R> return type of promise
-     * @param i task return a value of type R
+     * @param i   task return a value of type R
      * @return a promise with value type R
      * @since 2.4
      */
@@ -75,18 +75,17 @@ public class Promise<T> {
 
     /**
      * @param i task to handle error
-     * @return a void promise
+     * @return this promise
      * @since 2.4
      */
 
-    public Promise<Void> handle(Consumer<Throwable> i) {
-        Promise<Void> a = new Promise<>();
-        a.c = c.handle((x, y) -> {
+    public Promise<T> handle(Consumer<Throwable> i) {
+        c.handleAsync((x, y) -> {
             if (y != null)
                 i.accept(y);
-            return null;
+            return x;
         });
-        return a;
+        return this;
     }
 
     /**
@@ -94,29 +93,10 @@ public class Promise<T> {
      * @since 2.4
      */
 
-    public Promise<Void> handle() {
-        return this.handle(System.err::println);
-    }
-
-    /**
-     * @param i task to execute if errors aren't handle
-     * @since 2.4
-     */
-
-    public void end(Runnable i) {
-        c.whenComplete((k, y) -> {
-            if (y != null)
-                i.run();
+    public Promise<T> handle() {
+        return this.handle(x -> {
+            x.printStackTrace();
         });
-    }
-
-    /**
-     * @apiNote blank end
-     * @since 2.4
-     */
-
-    public void end() {
-        end(() -> {});
     }
 
     /**
@@ -130,7 +110,7 @@ public class Promise<T> {
 
     /**
      * @param <T> type of given promise
-     * @param p promise to await
+     * @param p   promise to await
      * @return result of given promise after executing
      * @since 2.4
      */

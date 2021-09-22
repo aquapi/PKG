@@ -1,7 +1,5 @@
 package com.pkg;
 
-import java.util.function.Consumer;
-
 import com.pkg.async.AsyncScope;
 import com.pkg.math.Complex;
 import com.pkg.time.Timer;
@@ -15,7 +13,10 @@ class TimerTest {
 
 class AsyncTest extends AsyncScope {
     public static void main(String[] args) {
-        scope.async(9).then((Consumer<Integer>) System.out::println);
+        scope.async(() -> {
+            System.out.println(9);
+            return null;
+        }).handle();
         System.out.println("Done");
     }
 }
