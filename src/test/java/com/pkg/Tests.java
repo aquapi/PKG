@@ -15,7 +15,6 @@ class TimerTest {
 class AsyncTest extends AsyncScope {
     public static void main(String[] args) {
         scope.async(9).then(a -> {
-            System.out.println(9);
             System.out.println(Thread.currentThread().getName());
         }).handle();
         System.out.println(Thread.currentThread().getName());
