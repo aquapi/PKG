@@ -1,7 +1,6 @@
 package com.pkg;
 
-import java.util.function.Consumer;
-
+import java.util.concurrent.CompletableFuture;
 import com.pkg.async.AsyncScope;
 import com.pkg.math.Complex;
 import com.pkg.time.Timer;
@@ -15,8 +14,11 @@ class TimerTest {
 
 class AsyncTest extends AsyncScope {
     public static void main(String[] args) {
-        scope.async(9).then((Consumer<Integer>) System.out::println).handle();
-        System.out.println("Done");
+        scope.async(9).then(a -> {
+            System.out.println(9);
+            System.out.println(Thread.currentThread().getName());
+        }).handle();
+        System.out.println(Thread.currentThread().getName());
     }
 }
 
@@ -24,5 +26,16 @@ class ComplexTest {
     public static void main(String[] args) {
         Complex a = new Complex(12, 17);
         System.out.println(a);
+    }
+}
+
+class Async {
+    public static void main(String[] args) {
+        CompletableFuture.supplyAsync(() -> 9).thenAcceptAsync(System.out::println).handleAsync((x, y) -> {
+            if (y != null)
+                y.printStackTrace();
+            return x;
+        });
+        System.out.println("Done");
     }
 }
