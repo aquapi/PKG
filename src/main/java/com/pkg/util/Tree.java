@@ -185,7 +185,7 @@ public final class Tree<T> implements Serializable {
 
     public synchronized int indexOf(Tree<T> node) {
         for (int i = 0; i < children.size(); i++) {
-            if (children.get(i) == node)
+            if (children.get(i).equals(node))
                 return i;
         }
         return -1;
@@ -198,7 +198,7 @@ public final class Tree<T> implements Serializable {
      */
 
     public boolean equals(Tree<T> tr) {
-        return tr.value == this.value && this.parent.equals(tr.parent) && this.children.equals(tr.children);
+        return tr.value.equals(this.value) && this.parent.equals(tr.parent) && this.children.equals(tr.children);
     }
 
     @Override
