@@ -198,7 +198,7 @@ public final class Tree<T> implements Serializable {
      */
 
     public boolean equals(Tree<T> tr) {
-        return tr.value == this.value && this.parent.equals(tr.parent) && tr.children.equals(tr.children);
+        return tr.value == this.value && this.parent.equals(tr.parent) && this.children.equals(tr.children);
     }
 
     @Override
