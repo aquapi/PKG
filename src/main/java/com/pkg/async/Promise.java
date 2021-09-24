@@ -23,7 +23,7 @@ public class Promise<T> {
      * @since 2.4
      */
 
-    private Promise() {
+    Promise() {
     }
 
     /**
@@ -79,12 +79,13 @@ public class Promise<T> {
      * @since 2.4
      */
 
-    public void handle(Consumer<Throwable> i) {
+    public Promise<T> handle(Consumer<Throwable> i) {
         c.handleAsync((x, y) -> {
             if (y != null)
                 i.accept(y);
             return x;
         });
+        return this;
     }
 
     /**
@@ -92,8 +93,8 @@ public class Promise<T> {
      * @since 2.4
      */
 
-    public void handle() {
-        this.handle(x -> {
+    public Promise<T> handle() {
+        return this.handle(x -> {
             x.printStackTrace();
         });
     }

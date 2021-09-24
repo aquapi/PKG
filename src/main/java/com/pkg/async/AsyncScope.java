@@ -62,7 +62,7 @@ public class AsyncScope {
      * @since 2.4
      */
 
-    public <T> Promise<T> async(T a) {
+    public <T> Promise<T> resolve(T a) {
         return Promise.resolve(a);
     }
 
@@ -73,7 +73,7 @@ public class AsyncScope {
      * @since 2.4
      */
 
-    public <T> Promise<T> async(Supplier<T> a) {
+    public <T> Promise<T> resolve(Supplier<T> a) {
         return new Promise<>(a);
     }
 }
