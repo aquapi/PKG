@@ -87,8 +87,8 @@ public class MathBonus {
 	 * @since 1.0
 	 */
 
-	public long factorial(long x) {
-		return x == 1 ? 1 : factorial(x - 1) * x;
+	public long factor(long x) {
+		return x == 1 ? 1 : factor(x - 1) * x;
 	}
 
 	/**
@@ -155,9 +155,21 @@ public class MathBonus {
 	 */
 
 	public double root(double exponent, double v, boolean round) {
-		double n = 1 / exponent;
-		return v == 0 ? 0d : (v == 1 ? 1 : (exponent == 0 ? 1 : (round) ? Math.round(Math.pow(v, n)) : Math.pow(v, n)));
+		double n = 1d / exponent;
+		return v == 0 ? 0d : (v == 1d ? 1d : (exponent == 0d ? 1d : (round) ? Math.round(Math.pow(v, n)) : Math.pow(v, n)));
 	}
+
+	/**
+	 * @param exponent the exponent
+	 * @param v        the power of 'exponent' of root(exponent, v)
+	 * @return base of 2 input numbers
+	 * @since 1.0
+	 */
+
+	public double root(double exponent, double v) {
+		return root(exponent, v, false);
+	}
+
 
 	/**
 	 * @param x
@@ -210,7 +222,7 @@ public class MathBonus {
 	 */
 
 	public double cot(double a) {
-		return 1 / Math.tan(a);
+		return 1d / Math.tan(a);
 	}
 
 	/**
@@ -220,6 +232,6 @@ public class MathBonus {
 	 */
 
 	public double acot(double a) {
-		return Math.atan(1 / a);
+		return Math.atan(1d / a);
 	}
 }

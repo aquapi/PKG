@@ -1,5 +1,6 @@
 package com.pkg;
 
+import static com.pkg.def.Static.math;
 import com.pkg.async.AsyncScope;
 import com.pkg.math.Complex;
 import com.pkg.time.Timer;
@@ -32,5 +33,11 @@ class ComplexTest {
         System.out.println(a);
         Complex b = Complex.parse("15 + 9i"); // parse a string to Complex
         System.out.println(b);
+    }
+}
+
+class MathTest {
+    public static void main(String[] args) {
+        System.out.println(math.acot(math.cot(19)));
     }
 }
