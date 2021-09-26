@@ -1,9 +1,9 @@
 package com.pkg;
 
-import static com.pkg.def.Static.math;
 import com.pkg.async.AsyncScope;
 import com.pkg.math.Complex;
 import com.pkg.time.Timer;
+import com.pkg.def.Maths;
 
 class TimerTest {
     public static void main(String[] args) {
@@ -38,6 +38,6 @@ class ComplexTest {
 
 class MathTest {
     public static void main(String[] args) {
-        System.out.println(math.acot(math.cot(19)));
+        System.out.println(Maths.acot(Maths.cot(19)));
     }
 }

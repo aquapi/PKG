@@ -247,8 +247,7 @@ public final class Static {
     public static List<Byte> toUTF(String str) throws UnsupportedEncodingException {
         return toUTF(str, StandardCharsets.UTF_16);
     }
-
-    public static final MathBonus math = new MathBonus();
+    
     public static final Static console = new Static();
 
     /**

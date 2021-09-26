@@ -3,8 +3,8 @@ package com.pkg.def;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MathBonus {
-	MathBonus() {
+public class Maths {
+	private Maths() {
 	}
 
 	/**
@@ -14,7 +14,7 @@ public class MathBonus {
 	 * @since 1.0
 	 */
 
-	public long gcd(long a, long b) {
+	public static long gcd(long a, long b) {
 		return (b == 0) ? a : gcd(b, a % b);
 	}
 
@@ -25,7 +25,7 @@ public class MathBonus {
 	 * @since 1.0
 	 */
 
-	public long lcm(long a, long b) {
+	public static long lcm(long a, long b) {
 		return (a * b) / gcd(a, b);
 	}
 
@@ -35,7 +35,7 @@ public class MathBonus {
 	 * @since 1.0
 	 */
 
-	public long fibonacciNumbers(long position) {
+	public static long fibonacciNumbers(long position) {
 		return (position == 0 || position == 1) ? 1 : fibonacciNumbers(position - 1) + fibonacciNumbers(position - 2);
 	}
 
@@ -45,7 +45,7 @@ public class MathBonus {
 	 * @since 1.0
 	 */
 
-	public long primeNumbers(long position) {
+	public static long primeNumbers(long position) {
 		position--;
 		if (position == 0)
 			return 2;
@@ -58,7 +58,7 @@ public class MathBonus {
 			long n = 2;
 			while (p < position) {
 				n++;
-				if (this.isPrimeNumber(n))
+				if (Maths.isPrimeNumber(n))
 					p++;
 			}
 			return n;
@@ -71,7 +71,7 @@ public class MathBonus {
 	 * @since 1.0
 	 */
 
-	public boolean isPrimeNumber(long n) {
+	public static boolean isPrimeNumber(long n) {
 		if (n < 2)
 			return false;
 		long squareRoot = (long) Math.sqrt(n);
@@ -87,7 +87,7 @@ public class MathBonus {
 	 * @since 1.0
 	 */
 
-	public long factor(long x) {
+	public static long factor(long x) {
 		return x == 1 ? 1 : factor(x - 1) * x;
 	}
 
@@ -97,7 +97,7 @@ public class MathBonus {
 	 * @since 1.6
 	 */
 
-	public long sumFrom(long x) {
+	public static long sumFrom(long x) {
 		return x == 1 ? 1 : sumFrom(x - 1) + x;
 	}
 
@@ -107,7 +107,7 @@ public class MathBonus {
 	 * @since 1.0
 	 */
 
-	public boolean isSquare(long i) {
+	public static boolean isSquare(long i) {
 		long a = (long) Math.sqrt(i);
 		return (a * a == i);
 	}
@@ -118,7 +118,7 @@ public class MathBonus {
 	 * @since 1.0
 	 */
 
-	public List<Integer> analysis(int n) {
+	public static List<Integer> analysis(int n) {
 		int i = 2;
 		List<Integer> listNumbers = new ArrayList<Integer>();
 		while (n > 1) {
@@ -140,7 +140,7 @@ public class MathBonus {
 	 * @since 1.0
 	 */
 
-	public double log(double base, double v) {
+	public static double log(double base, double v) {
 		// logbase(v)
 		return v == 1 ? 0
 				: (v > 0 ? (Math.log(v) / Math.log(base)) : (base == 0 && v > 0 ? Constants.posiInf : Constants.NaN));
@@ -154,7 +154,7 @@ public class MathBonus {
 	 * @since 1.0
 	 */
 
-	public double root(double exponent, double v, boolean round) {
+	public static double root(double exponent, double v, boolean round) {
 		double n = 1d / exponent;
 		return v == 0 ? 0d : (v == 1d ? 1d : (exponent == 0d ? 1d : (round) ? Math.round(Math.pow(v, n)) : Math.pow(v, n)));
 	}
@@ -166,7 +166,7 @@ public class MathBonus {
 	 * @since 1.0
 	 */
 
-	public double root(double exponent, double v) {
+	public static double root(double exponent, double v) {
 		return root(exponent, v, false);
 	}
 
@@ -177,7 +177,7 @@ public class MathBonus {
 	 * @since 1.4
 	 */
 
-	public boolean isNaN(Object x) {
+	public static boolean isNaN(Object x) {
 		return !(x instanceof Number);
 	}
 
@@ -187,7 +187,7 @@ public class MathBonus {
 	 * @since 1.4
 	 */
 
-	public boolean isPalindrome(int n) {
+	public static boolean isPalindrome(int n) {
 		int sum = 0, r;
 		int temp = n;
 		while (n > 0) {
@@ -205,7 +205,7 @@ public class MathBonus {
 	 * @since 1.8
 	 */
 
-	public int[] range(int x, int y) {
+	public static int[] range(int x, int y) {
 		int[] temp = new int[y - x];
 		int h = x;
 		while (x < y) {
@@ -221,7 +221,7 @@ public class MathBonus {
 	 * @since 1.8
 	 */
 
-	public double cot(double a) {
+	public static double cot(double a) {
 		return 1d / Math.tan(a);
 	}
 
@@ -231,7 +231,7 @@ public class MathBonus {
 	 * @since 1.8
 	 */
 
-	public double acot(double a) {
+	public static double acot(double a) {
 		return Math.atan(1d / a);
 	}
 }
