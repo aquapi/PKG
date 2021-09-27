@@ -16,9 +16,14 @@ class TimerTest {
 
 class AsyncTest extends AsyncScope {
     public void run() { // Asynchronous function
-        resolve(9).then(a -> {
-            System.out.println(Thread.currentThread().getName());
-        }).handle();
+        new Thread(() -> {
+            System.out.println(await(resolve(9)));
+            resolve(9).then(a -> {
+                System.out.println(Thread.currentThread().getName());
+                System.out.println(Thread.currentThread().getId());
+                System.out.println(Thread.currentThread().isAlive());
+            }).handle();
+        }).start();
     }
 
     public static void main(String[] args) {
