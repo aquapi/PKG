@@ -1,9 +1,13 @@
 package com.pkg;
 
+import java.io.File;
+import java.io.IOException;
+
 import com.pkg.async.AsyncScope;
 import com.pkg.math.Complex;
 import com.pkg.time.Timer;
-import com.pkg.def.Maths;
+import com.pkg.io.FileManipulator;
+import com.pkg.io.Permission;
 
 class TimerTest {
     public static void main(String[] args) {
@@ -41,8 +45,12 @@ class ComplexTest {
     }
 }
 
-class MathTest {
-    public static void main(String[] args) {
-        System.out.println(Maths.acot(Maths.cot(19)));
+class FileTest {
+    public static void main(String[] args) throws IOException {
+        File f = new File("t.txt");
+        f.createNewFile();
+        FileManipulator x = new FileManipulator(f);
+        x.add("Hello");
+        x.permit(Permission.ALL);
     }
 }

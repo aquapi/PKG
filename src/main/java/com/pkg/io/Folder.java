@@ -2,7 +2,6 @@ package com.pkg.io;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -352,11 +351,11 @@ public class Folder implements Serializable {
 
     /**
      * @return true if success
-     * @throws FileNotFoundException
+     * @throws IOException
      * @since 2.4
      */
 
-    public boolean extract() throws FileNotFoundException {
+    public boolean extract() throws IOException {
         return new FileManipulator(ptr()).extractDirectory();
     }
 

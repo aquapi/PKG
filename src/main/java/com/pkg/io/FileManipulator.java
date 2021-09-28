@@ -17,11 +17,13 @@ public class FileManipulator {
      * @since 1.0
      */
 
-    public FileManipulator(File file) throws FileNotFoundException {
+    public FileManipulator(File file) throws IOException {
         if (file == null) {
             throw new FileNotFoundException("No file given");
         }
         this.file = file;
+        if (!file.exists())
+            file.createNewFile();
     }
 
     /**
@@ -30,11 +32,13 @@ public class FileManipulator {
      * @since 2.1
      */
 
-    public FileManipulator(String filename) throws FileNotFoundException {
+    public FileManipulator(String filename) throws IOException {
         if (filename == null || filename == "") {
             throw new FileNotFoundException("No file given");
         }
         this.file = new File(filename);
+        if (!file.exists())
+            file.createNewFile();
     }
 
     /**
@@ -147,6 +151,26 @@ public class FileManipulator {
             file.delete();
         }
         this.file = j;
+    }
+
+    /**
+     * @param p permission number
+     * @since 2.4
+     */
+
+    public void permit(int p) {
+        file.setExecutable(p == 4 || p == Permission.ALL || p == 6 || p == 5);
+        file.setWritable(p == 2 || p == Permission.ALL || p == 6 || p == 3);
+        file.setReadable(p == 1 || p == Permission.ALL || p == 3 || p == 5);
+    }
+
+    /**
+     * @param f switch to handle another file
+     * @since 2.4
+     */
+
+    public void switchTo(File f) {
+        this.file = f;
     }
 
     /**
