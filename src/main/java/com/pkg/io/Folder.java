@@ -22,10 +22,11 @@ public class Folder implements Serializable {
     /**
      * @param name    folder name
      * @param folders subfolders
+     * @throws IOException
      * @since 1.9
      */
 
-    public Folder(String name, Folder... folders) {
+    public Folder(String name, Folder... folders) throws IOException {
         this.name = name;
         parent = null;
         cursor = new File(name);
@@ -33,15 +34,17 @@ public class Folder implements Serializable {
         for (Folder e : folders) {
             next.add(e);
         }
+        initChild(this);
     }
 
     /**
      * @param name folder name
      * @param file list of file in folder
+     * @throws IOException
      * @since 1.9
      */
 
-    public Folder(String name, File... file) {
+    public Folder(String name, File... file) throws IOException {
         this.name = name;
         parent = null;
         cursor = new File(name);
@@ -49,23 +52,26 @@ public class Folder implements Serializable {
         for (File e : file) {
             elements.add(e);
         }
+        initChild(this);
     }
 
     /**
      * @param file list of file in folder
+     * @throws IOException
      * @since 1.9
      */
 
-    public Folder(File... file) {
+    public Folder(File... file) throws IOException {
         this("", file);
     }
 
     /**
      * @param folders subfolders
+     * @throws IOException
      * @since 1.9
      */
 
-    public Folder(Folder... folders) {
+    public Folder(Folder... folders) throws IOException {
         this("", folders);
     }
 
@@ -80,6 +86,7 @@ public class Folder implements Serializable {
         cursor = new File(name);
         parent = null;
         created = cursor.exists();
+        initChild(this);
     }
 
     /**
@@ -445,6 +452,28 @@ public class Folder implements Serializable {
 
     public boolean equals(Folder j) {
         return (this.name == j.name && this.parent.files().equals(j.parent.files()));
+    }
+
+    /**
+     * @param tab
+     * @return a string representation of this object
+     * @since 2.4
+     */
+
+    public String toString(String tab) {
+        String result = cursor.getAbsolutePath() + "\n";
+        for (Folder folder : folders()) {
+            result += tab + folder.toString(tab + "  ") + "\n";
+        }
+        for (File file : files()) {
+            result += tab + file.getAbsolutePath() + "\n";
+        }
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return toString("  ");
     }
 
     /**

@@ -45,8 +45,6 @@ class ComplexTest {
 
 class FileTest {
     public static void main(String[] args) throws IOException {
-        Folder f = new Folder("Name");
-        f.mkdirs();
-        System.out.println(f.parent().folders());
+        System.out.println(new Folder("E:/Java/pkg/src/main/java/com/pkg/async/function"));
     }
 }
