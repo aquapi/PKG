@@ -71,10 +71,11 @@ public class Folder implements Serializable {
 
     /**
      * @param name folder name
+     * @throws IOException
      * @since 1.9
      */
 
-    public Folder(String name) {
+    public Folder(String name) throws IOException {
         this.name = name;
         cursor = new File(name);
         parent = null;
@@ -84,10 +85,12 @@ public class Folder implements Serializable {
     /**
      * Construct an unamed folder with no subfolder and file inside
      * 
+     * @throws IOException
+     * 
      * @since 1.9
      */
 
-    public static Folder blank() {
+    public static Folder blank() throws IOException {
         return new Folder("");
     }
 
@@ -111,24 +114,14 @@ public class Folder implements Serializable {
 
     /**
      * @param newname of the folder
-     * @since 1.9
-     */
-
-    public void setName(String newname) {
-        this.name = newname;
-    }
-
-    /**
-     * @return task progress
      * @throws IOException
      * @since 1.9
      */
 
-    private LinkedList<Boolean> remkdirs() throws IOException {
-        LinkedList<Boolean> task = new LinkedList<>();
-        task.add(new FileManipulator(cursor).delete());
-        task.addAll(this.mkdirs());
-        return task;
+    public void setName(String newname) throws IOException {
+        this.name = newname;
+        if (created)
+            remkdirs(parent());
     }
 
     /**
@@ -143,7 +136,7 @@ public class Folder implements Serializable {
             fl.parent = this;
         }
         if (this.created())
-            remkdirs();
+            remkdirs(parent());
     }
 
     /**
@@ -155,7 +148,7 @@ public class Folder implements Serializable {
     public void add(File... file) throws IOException {
         elements.addAll(Arrays.asList(file));
         if (this.created())
-            remkdirs();
+            remkdirs(parent());
     }
 
     /**
@@ -167,7 +160,7 @@ public class Folder implements Serializable {
     public void delete(Folder folder) throws IOException {
         next.remove(folder);
         if (this.created())
-            remkdirs();
+            remkdirs(parent());
     }
 
     /**
@@ -179,7 +172,7 @@ public class Folder implements Serializable {
     public void delete(File file) throws IOException {
         elements.remove(file);
         if (this.created())
-            remkdirs();
+            remkdirs(parent());
     }
 
     /**
@@ -202,11 +195,37 @@ public class Folder implements Serializable {
 
     /**
      * @return folder's parent
+     * @throws IOException
      * @since 1.9
      */
 
-    public Folder parent() {
-        return parent;
+    public Folder parent() throws IOException {
+        if (parent != null)
+            return parent;
+        Folder f = new Folder(new FileManipulator(cursor).getParent().getAbsolutePath());
+        initChild(f);
+        return f;
+    }
+
+    /**
+     * @param f
+     * @throws IOException
+     * @since 2.4
+     */
+
+    private void initChild(Folder f) throws IOException {
+        File[] list = f.cursor.listFiles();
+        if (list != null && list.length != 0) {
+            for (File e : list) {
+                if (!e.isDirectory())
+                    f.elements.add(e);
+                else {
+                    Folder target = new Folder(e.getAbsolutePath());
+                    initChild(target);
+                    f.next.add(target);
+                }
+            }
+        }
     }
 
     /**
@@ -257,6 +276,10 @@ public class Folder implements Serializable {
         LinkedList<Boolean> task = new LinkedList<>();
         if (!created) {
             created = true;
+            if (elements.size() == 0 && next.size() == 0) {
+                task.add(mkdir());
+                return task;
+            }
             File fl = new File(name);
             if (!fl.exists()) {
                 task.add(fl.mkdir());
@@ -275,6 +298,15 @@ public class Folder implements Serializable {
             cursor = fl;
         }
         return task;
+    }
+
+    /**
+     * @return true if folder created
+     * @since 2.4
+     */
+
+    private boolean mkdir() {
+        return new File(name).mkdirs();
     }
 
     /**
