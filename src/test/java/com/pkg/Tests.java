@@ -51,6 +51,7 @@ class FileTest {
         f.createNewFile();
         FileManipulator x = new FileManipulator(f);
         x.add("Hello");
-        x.permit(Permission.ALL);
+        x.hide();
+        x.permit(Permission.READ);
     }
 }

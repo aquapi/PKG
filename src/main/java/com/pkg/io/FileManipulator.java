@@ -6,6 +6,11 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.LinkOption;
+import java.nio.file.attribute.DosFileAttributeView;
+import java.nio.file.attribute.UserDefinedFileAttributeView;
 import java.util.Scanner;
 
 public class FileManipulator {
@@ -169,8 +174,63 @@ public class FileManipulator {
      * @since 2.4
      */
 
-    public void switchTo(File f) {
+    public FileManipulator switchTo(File f) {
         this.file = f;
+        return this;
+    }
+
+    /**
+     * @apiNote make the current file hidden
+     * @throws IOException
+     * @since 2.4
+     */
+
+    public void hide() throws IOException {
+        Files.setAttribute(file.toPath(), "dos:hidden", true, LinkOption.NOFOLLOW_LINKS);
+    }
+
+    /**
+     * @apiNote make the current file shown
+     * @throws IOException
+     * @since 2.4
+     */
+
+    public void show() throws IOException {
+        Files.setAttribute(file.toPath(), "dos:hidden", false, LinkOption.NOFOLLOW_LINKS);
+    }
+
+    /**
+     * @param value of property system
+     * @throws IOException
+     * @since 2.4
+     */
+
+    public void setSystem(boolean value) throws IOException {
+        DosFileAttributeView view = Files.getFileAttributeView(file.toPath(), DosFileAttributeView.class);
+        view.setSystem(value);
+    }
+
+    /**
+     * @param value of property article
+     * @throws IOException
+     * @since 2.4
+     */
+
+    public void setArchive(boolean value) throws IOException {
+        DosFileAttributeView view = Files.getFileAttributeView(file.toPath(), DosFileAttributeView.class);
+        view.setArchive(value);
+    }
+
+    /**
+     * @param name
+     * @param value type should have a predefined toString()
+     * @throws IOException
+     * @since 2.4
+     */
+
+    public void createAttribute(String name, Object value) throws IOException {
+        UserDefinedFileAttributeView view = Files.getFileAttributeView(file.toPath(), UserDefinedFileAttributeView.class);
+        view.write(name, Charset.defaultCharset().encode(value.toString()));
     }
 
     /**
