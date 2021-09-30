@@ -219,7 +219,6 @@ public class Folder implements Serializable {
         if (parent != null)
             return parent;
         Folder f = new Folder(new FileManipulator(cursor).getParent().getAbsolutePath());
-        initChild(f);
         return f;
     }
 
@@ -428,6 +427,12 @@ public class Folder implements Serializable {
         return cursor == null ? false : new FileManipulator(cursor).delete();
     }
 
+    /**
+     * @param name
+     * @return a folder with name in this folder
+     * @since 2.4
+     */
+
     public Folder get(String name) {
         for (Folder f : folders()) {
             if (f.getPath() == name || f.getName() == name)
@@ -436,6 +441,12 @@ public class Folder implements Serializable {
         return null;
     }
 
+    /**
+     * @param name
+     * @return a file with name in this folder
+     * @since 2.4
+     */
+
     public File find(String name) {
         for (File f : files()) {
             if (f.getAbsolutePath() == name || f.getName() == name)
@@ -443,8 +454,6 @@ public class Folder implements Serializable {
         }
         return null;
     }
-
-    // TODO: In test
 
     /**
      * @param f
@@ -460,14 +469,11 @@ public class Folder implements Serializable {
                     f.elements.add(e);
                 else {
                     Folder target = new Folder(e.getAbsolutePath());
-                    initChild(target);
                     f.next.add(target);
                 }
             }
         }
     }
-
-    // TODO: End
 
     /**
      * @param tab
