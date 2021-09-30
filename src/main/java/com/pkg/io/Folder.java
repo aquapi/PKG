@@ -8,6 +8,8 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serial;
 import java.io.Serializable;
+import java.net.URI;
+import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.LinkedList;
 
@@ -456,6 +458,24 @@ public class Folder implements Serializable {
     }
 
     /**
+     * @return folder in path
+     * @since 2.4
+     */
+
+    public Path toPath() {
+        return cursor.toPath();
+    }
+
+    /**
+     * @return folder in URI
+     * @since 2.4
+     */
+
+    public URI toURI() {
+        return cursor.toURI();
+    }
+
+    /**
      * @param f
      * @throws IOException
      * @since 2.4
@@ -473,6 +493,26 @@ public class Folder implements Serializable {
                 }
             }
         }
+    }
+
+    /**
+     * @apiNote Hide the folder
+     * @throws IOException
+     * @since 2.4
+     */
+
+    public void hide() throws IOException {
+        new FileManipulator(cursor).hide();
+    }
+
+    /**
+     * @apiNote Show the folder
+     * @throws IOException
+     * @since 2.4
+     */
+
+    public void show() throws IOException {
+        new FileManipulator(cursor).show();
     }
 
     /**
