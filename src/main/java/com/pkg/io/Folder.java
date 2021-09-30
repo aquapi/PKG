@@ -136,7 +136,7 @@ public class Folder implements Serializable {
      * @since 1.9
      */
 
-    public void setName(String newpath) throws IOException {
+    public void setPath(String newpath) throws IOException {
         this.path = newpath;
         if (created)
             remkdirs(parent());
@@ -522,12 +522,12 @@ public class Folder implements Serializable {
      */
 
     public String toString(String tab) {
-        String result = cursor.getAbsolutePath() + "\n";
+        String result = cursor.getName() + "\n";
         for (Folder folder : folders()) {
             result += tab + "  " + folder.toString(tab + "  ") + "\n";
         }
         for (File file : files()) {
-            result += tab + "  " + file.getAbsolutePath() + "\n";
+            result += tab + "  " + file.getName() + "\n";
         }
         return result;
     }
