@@ -27,9 +27,9 @@ public class Folder implements Serializable {
      */
 
     public Folder(String name, Folder... folders) throws IOException {
-        this.name = name;
         parent = null;
         cursor = new File(name);
+        this.name = cursor.getAbsolutePath();
         created = cursor.exists();
         for (Folder e : folders) {
             next.add(e);
@@ -45,9 +45,9 @@ public class Folder implements Serializable {
      */
 
     public Folder(String name, File... file) throws IOException {
-        this.name = name;
         parent = null;
         cursor = new File(name);
+        this.name = cursor.getAbsolutePath();
         created = cursor.exists();
         for (File e : file) {
             elements.add(e);
@@ -82,8 +82,8 @@ public class Folder implements Serializable {
      */
 
     public Folder(String name) throws IOException {
-        this.name = name;
         cursor = new File(name);
+        this.name = cursor.getAbsolutePath();
         parent = null;
         created = cursor.exists();
         initChild(this);
@@ -102,12 +102,21 @@ public class Folder implements Serializable {
     }
 
     /**
-     * @return folder name
+     * @return folder path
      * @since 1.9
      */
 
-    public String getName() {
+    public String getPath() {
         return name;
+    }
+
+    /**
+     * @return folder name
+     * @since 2.4
+     */
+
+    public String getName() {
+        return cursor.getName();
     }
 
     /**
@@ -215,27 +224,6 @@ public class Folder implements Serializable {
     }
 
     /**
-     * @param f
-     * @throws IOException
-     * @since 2.4
-     */
-
-    private void initChild(Folder f) throws IOException {
-        File[] list = f.cursor.listFiles();
-        if (list != null && list.length != 0) {
-            for (File e : list) {
-                if (!e.isDirectory())
-                    f.elements.add(e);
-                else {
-                    Folder target = new Folder(e.getAbsolutePath());
-                    initChild(target);
-                    f.next.add(target);
-                }
-            }
-        }
-    }
-
-    /**
      * @param parent of current folder
      * @return task progress (done or undone)
      * @throws IOException
@@ -266,8 +254,9 @@ public class Folder implements Serializable {
                 task.add(el.delete());
             }
         }
-        for (Folder k : this.next) {
-            task.addAll(k.mkdirs(this));
+        final int x = next.size();
+        for (int i = 0; i < x; i++) {
+            task.addAll(next.get(i).mkdirs(this));
         }
         cursor = fold;
         return task;
@@ -298,8 +287,9 @@ public class Folder implements Serializable {
                         task.add(el.delete());
                     }
                 }
-                for (Folder fd : next) {
-                    task.addAll(fd.mkdirs(this));
+                final int x = next.size();
+                for (int i = 0; i < x; i++) {
+                    task.addAll(next.get(i).mkdirs(this));
                 }
             }
             cursor = fl;
@@ -438,6 +428,69 @@ public class Folder implements Serializable {
         return cursor == null ? false : new FileManipulator(cursor).delete();
     }
 
+    public Folder get(String name) {
+        for (Folder f : folders()) {
+            if (f.getPath() == name || f.getName() == name)
+                return f;
+        }
+        return null;
+    }
+
+    public File find(String name) {
+        for (File f : files()) {
+            if (f.getAbsolutePath() == name || f.getName() == name)
+                return f;
+        }
+        return null;
+    }
+
+    // TODO: In test
+
+    /**
+     * @param f
+     * @throws IOException
+     * @since 2.4
+     */
+
+    private void initChild(Folder f) throws IOException {
+        File[] list = f.cursor.listFiles();
+        if (list != null && list.length != 0) {
+            for (File e : list) {
+                if (!e.isDirectory())
+                    f.elements.add(e);
+                else {
+                    Folder target = new Folder(e.getAbsolutePath());
+                    initChild(target);
+                    f.next.add(target);
+                }
+            }
+        }
+    }
+
+    // TODO: End
+
+    /**
+     * @param tab
+     * @return a string representation of this object
+     * @since 2.4
+     */
+
+    public String toString(String tab) {
+        String result = cursor.getAbsolutePath() + "\n";
+        for (Folder folder : folders()) {
+            result += tab + "  " + folder.toString(tab + "  ") + "\n";
+        }
+        for (File file : files()) {
+            result += tab + "  " + file.getAbsolutePath() + "\n";
+        }
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return toString("");
+    }
+
     @Override
     @SuppressWarnings("deprecation")
     protected void finalize() throws Throwable {
@@ -452,28 +505,6 @@ public class Folder implements Serializable {
 
     public boolean equals(Folder j) {
         return (this.name == j.name && this.parent.files().equals(j.parent.files()));
-    }
-
-    /**
-     * @param tab
-     * @return a string representation of this object
-     * @since 2.4
-     */
-
-    public String toString(String tab) {
-        String result = cursor.getAbsolutePath() + "\n";
-        for (Folder folder : folders()) {
-            result += tab + folder.toString(tab + "  ") + "\n";
-        }
-        for (File file : files()) {
-            result += tab + file.getAbsolutePath() + "\n";
-        }
-        return result;
-    }
-
-    @Override
-    public String toString() {
-        return toString("  ");
     }
 
     /**
