@@ -43,7 +43,7 @@ class ComplexTest {
 
 class FileTest {
     public static void main(String[] args) throws Throwable {
-        Folder f = new Folder("E:/Java/pkg/src/test/java/com/pkg/resource");
+        Folder f = new Folder("E:/Java/pkg/src/main/java/com/pkg");
         System.out.println(f);
     }
 }

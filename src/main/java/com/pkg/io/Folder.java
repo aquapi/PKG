@@ -14,7 +14,7 @@ import java.util.LinkedList;
 public class Folder implements Serializable {
     private LinkedList<File> elements = new LinkedList<>();
     private LinkedList<Folder> next = new LinkedList<>();
-    private String name;
+    private String path;
     private File cursor;
     private Folder parent;
     private boolean created;
@@ -26,10 +26,10 @@ public class Folder implements Serializable {
      * @since 1.9
      */
 
-    public Folder(String name, Folder... folders) throws IOException {
+    public Folder(String path, Folder... folders) throws IOException {
         parent = null;
-        cursor = new File(name);
-        this.name = cursor.getAbsolutePath();
+        cursor = new File(path);
+        this.path = cursor.getAbsolutePath();
         created = cursor.exists();
         for (Folder e : folders) {
             next.add(e);
@@ -44,10 +44,10 @@ public class Folder implements Serializable {
      * @since 1.9
      */
 
-    public Folder(String name, File... file) throws IOException {
+    public Folder(String path, File... file) throws IOException {
         parent = null;
-        cursor = new File(name);
-        this.name = cursor.getAbsolutePath();
+        cursor = new File(path);
+        this.path = cursor.getAbsolutePath();
         created = cursor.exists();
         for (File e : file) {
             elements.add(e);
@@ -81,9 +81,9 @@ public class Folder implements Serializable {
      * @since 1.9
      */
 
-    public Folder(String name) throws IOException {
-        cursor = new File(name);
-        this.name = cursor.getAbsolutePath();
+    public Folder(String path) throws IOException {
+        cursor = new File(path);
+        this.path = cursor.getAbsolutePath();
         parent = null;
         created = cursor.exists();
         initChild(this);
@@ -107,7 +107,7 @@ public class Folder implements Serializable {
      */
 
     public String getPath() {
-        return name;
+        return path;
     }
 
     /**
@@ -134,8 +134,8 @@ public class Folder implements Serializable {
      * @since 1.9
      */
 
-    public void setName(String newname) throws IOException {
-        this.name = newname;
+    public void setName(String newpath) throws IOException {
+        this.path = newpath;
         if (created)
             remkdirs(parent());
     }
@@ -275,11 +275,11 @@ public class Folder implements Serializable {
                 task.add(mkdir());
                 return task;
             }
-            File fl = new File(name);
+            File fl = new File(path);
             if (!fl.exists()) {
                 task.add(fl.mkdir());
                 for (File el : elements) {
-                    File cr = new File(name + File.separator + el.getName());
+                    File cr = new File(path + File.separator + el.getName());
                     task.add(cr.createNewFile());
                     if (el.exists()) {
                         new FileManipulator(el).moveTo(cr);
@@ -302,7 +302,7 @@ public class Folder implements Serializable {
      */
 
     private boolean mkdir() {
-        return new File(name).mkdirs();
+        return new File(path).mkdirs();
     }
 
     /**
@@ -401,7 +401,7 @@ public class Folder implements Serializable {
         for (Folder f : folders()) {
             p.add(f.ptr());
         }
-        return p.zipAs(name + ".zip");
+        return p.zipAs(path + ".zip");
     }
 
     /**
@@ -510,7 +510,7 @@ public class Folder implements Serializable {
      */
 
     public boolean equals(Folder j) {
-        return (this.name == j.name && this.parent.files().equals(j.parent.files()));
+        return (this.path == j.path && this.parent.files().equals(j.parent.files()));
     }
 
     /**
