@@ -47,15 +47,14 @@ public class FileManipulator {
     }
 
     /**
-     * @param file
-     * @param writer
+     * @param text
      * @throws IOException
      * @since 1.0
      */
 
-    public void write(String writer) throws IOException {
+    public void write(String text) throws IOException {
         FileWriter a = new FileWriter(this.file);
-        a.write(writer);
+        a.write(text);
         a.close();
     }
 

@@ -1,5 +1,7 @@
 package com.pkg;
 
+import java.io.IOException;
+
 import com.pkg.async.AsyncScope;
 import com.pkg.io.Folder;
 import com.pkg.math.Complex;
@@ -42,8 +44,8 @@ class ComplexTest {
 }
 
 class FileTest {
-    public static void main(String[] args) throws Throwable {
-        Folder f = new Folder("E:/Java/pkg/src/main/java/com/pkg");
+    public static void main(String[] args) throws IOException {
+        Folder f = new Folder("src");
         System.out.println(f);
     }
 }
