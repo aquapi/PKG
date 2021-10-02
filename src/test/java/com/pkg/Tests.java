@@ -40,7 +40,7 @@ class ComplexTest {
         Complex a = new Complex(12, 17); // Complex number constructor
         System.out.println(a);
         Complex b = Complex.parse("15 + 9i"); // parse a string to Complex
-        System.out.println(b);
+        System.out.println(a.compareTo(b));
     }
 }
 

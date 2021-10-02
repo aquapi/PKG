@@ -2,7 +2,7 @@ package com.pkg.math;
 
 import com.pkg.def.Static;
 
-public final class Complex extends Number {
+public final class Complex extends Number implements Comparable<Complex> {
     public double real, imag;
 
     /**
@@ -256,5 +256,12 @@ public final class Complex extends Number {
     @Override
     public double doubleValue() {
         return this.real;
+    }
+
+    @Override
+    public int compareTo(Complex o) {
+        if (equals(o))
+            return 0;
+        return o.real < real ? 1 : (o.real == real ? (o.imag < imag ? 1 : (o.imag == imag ? 0 : -1)) : -1);
     }
 }

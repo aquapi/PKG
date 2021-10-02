@@ -60,7 +60,7 @@ public final class Pair<E, D> implements Serializable, Comparable<Pair<E, D>> {
      */
 
     public boolean isMissing() {
-        return e1 != null && e2 != null;
+        return e1 == null || e2 == null;
     }
 
     /**

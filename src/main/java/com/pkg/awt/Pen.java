@@ -218,7 +218,7 @@ public final class Pen extends JPanel {
     public void clear() {
         degree = 0;
         locationReset();
-        drawer = new BufferedImage(pnW, pnH, BufferedImage.TYPE_INT_RGB);
+        drawer = new Pen().drawer;
     }
 
     /**

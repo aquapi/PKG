@@ -1,13 +1,9 @@
 package com.pkg.def;
 
-import java.io.UnsupportedEncodingException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
 import java.util.Timer;
@@ -185,26 +181,6 @@ public final class Static {
         return !(x == null);
     }
 
-    private static List<Byte> h = new ArrayList<Byte>();
-
-    /**
-     * @param str
-     * @param encoding
-     * @return byte list
-     * @throws UnsupportedEncodingException
-     * @since 1.1
-     */
-
-    public static List<Byte> toUTF(String str, Charset encoding) throws UnsupportedEncodingException {
-        h.clear();
-        h = new ArrayList<Byte>();
-        byte[] arr = str.getBytes(encoding.name());
-        for (Byte n : arr) {
-            h.add(n);
-        }
-        return h;
-    }
-
     /**
      * @param <T>
      * @param arr
@@ -237,17 +213,6 @@ public final class Static {
         return true;
     }
 
-    /**
-     * @param str
-     * @return character default encoding
-     * @throws UnsupportedEncodingException
-     * @since 1.8
-     */
-
-    public static List<Byte> toUTF(String str) throws UnsupportedEncodingException {
-        return toUTF(str, StandardCharsets.UTF_16);
-    }
-    
     public static final Static console = new Static();
 
     /**

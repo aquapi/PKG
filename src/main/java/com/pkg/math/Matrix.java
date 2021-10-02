@@ -2,6 +2,7 @@ package com.pkg.math;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.LinkedList;
 
 public class Matrix implements Serializable {
@@ -190,4 +191,18 @@ public class Matrix implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;
+
+    /**
+     * @param o matrix to compare
+     * @return true if this matrix equals to o
+     * @since 2.4
+     */
+
+    public boolean equals(Matrix o) {
+        for (int i = 0; i < o.matrix.size(); i++) {
+            if (!Arrays.equals(matrix.get(i), o.matrix.get(i))) 
+                return false; 
+        }
+        return true;
+    }
 }
