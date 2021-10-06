@@ -5,6 +5,7 @@ import java.awt.image.BufferedImage;
 import java.util.LinkedList;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.Color;
 
 /**
  * Idea from 'turtle' package in Python. See 'turtle' package here
@@ -73,6 +74,15 @@ public final class Pen extends JPanel {
 
     public Pen() {
         this(MACfullScreenX / 2, MACfullScreenY / 2);
+    }
+
+    /**
+     * @param c color of the drawer
+     * @since 2.4
+     */
+
+    public void setColor(Color c) {
+        drawerG.setColor(c);
     }
 
     /**
@@ -218,7 +228,7 @@ public final class Pen extends JPanel {
     public void clear() {
         degree = 0;
         locationReset();
-        drawer = new Pen().drawer;
+        drawer = new Pen(locateX, locateY, pnW, pnH).drawer;
     }
 
     /**
