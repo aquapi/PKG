@@ -1,8 +1,13 @@
 package com.pkg;
 
+import java.awt.Color;
 import java.io.IOException;
 
+import javax.swing.JFrame;
+import javax.swing.WindowConstants;
+
 import com.pkg.async.AsyncScope;
+import com.pkg.awt.Pen;
 import com.pkg.io.Folder;
 import com.pkg.math.Complex;
 import com.pkg.math.Matrix;
@@ -58,5 +63,19 @@ class MatrixTest {
             new double[]{3, 7, 6}
         );
         System.out.println(x);
+    }
+}
+
+class PenTest {
+    public static void main(String[] args) {
+        JFrame frame = new JFrame("Pen");
+        frame.setVisible(true);
+        frame.setSize(700, 700);
+        frame.setLocationRelativeTo(null);
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        Pen p = new Pen(50, 50, 600, 600);
+        p.setColor(Color.CYAN);
+        p.forward(19);
+        frame.add(p);
     }
 }

@@ -82,7 +82,8 @@ public final class Pen extends JPanel {
      */
 
     public void setColor(Color c) {
-        drawerG.setColor(c);
+        k.add((e) -> e.setColor(c));
+        drawerG.setColor(c);  
     }
 
     /**
