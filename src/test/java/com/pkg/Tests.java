@@ -74,8 +74,11 @@ class PenTest {
         frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         Pen p = new Pen(50, 50, 600, 600);
-        p.setColor(Color.CYAN);
-        p.forward(19);
+        p.setColor(Color.RED);
+        p.forward(200);
+        p.setColor(Color.BLUE);
+        p.rotate(90);
+        p.forward(200);
         frame.add(p);
     }
 }

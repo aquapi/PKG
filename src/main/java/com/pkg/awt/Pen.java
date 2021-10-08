@@ -6,6 +6,7 @@ import java.util.LinkedList;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Color;
+import java.awt.Graphics2D;
 
 /**
  * Idea from 'turtle' package in Python. See 'turtle' package here
@@ -27,7 +28,7 @@ public final class Pen extends JPanel {
     private static final long serialVersionUID = 1L;
     private LinkedList<PenTask> k = new LinkedList<>();
     public BufferedImage drawer;
-    private Graphics drawerG;
+    private Graphics2D drawerG;
     private int locateX, locateY, pnW, pnH, degree = 0;
     private boolean penup = false;
     public final int dfLocationX, dfLocationY;
@@ -46,10 +47,10 @@ public final class Pen extends JPanel {
         this.locateY = locateY;
         this.pnW = pnW;
         this.pnH = pnH;
-        drawer = new BufferedImage(pnW, pnH, BufferedImage.TYPE_INT_RGB);
+        drawer = new BufferedImage(pnW, pnH, BufferedImage.TYPE_INT_ARGB);
         this.setVisible(true);
         this.setSize(pnW, pnH);
-        drawerG = drawer.getGraphics();
+        drawerG = drawer.createGraphics();
         this.dfLocationX = locateX;
         this.dfLocationY = locateY;
     }
@@ -242,9 +243,9 @@ public final class Pen extends JPanel {
         clear();
         locateX = locateY = pnW = pnH = degree = 0;
         goTo(locateX, locateY);
-        drawer = null;
-        drawerG = null;
-        penup = false;
+        drawer = null; // Prevent user from drawing
+        drawerG = null; // Prevent user from drawing
+        penup = false; 
         System.gc();
     }
 
