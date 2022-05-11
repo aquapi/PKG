@@ -1,6 +1,10 @@
 package com.pkg.math;
 
-import com.pkg.def.Static;
+class Utils {
+    static boolean isDigit(char c) {
+        return c >= '0' && c <= '9';
+    }
+}
 
 public final class Complex extends Number implements Comparable<Complex> {
     public double real, imag;
@@ -155,7 +159,7 @@ public final class Complex extends Number implements Comparable<Complex> {
             s = s.substring(1);
             real_nega = true;
         }
-        if (Static.isDigit(s.charAt(0))) {
+        if (Utils.isDigit(s.charAt(0))) {
             if (s.contains("i")) {
                 temp = new String[2];
                 temp[0] = "0";

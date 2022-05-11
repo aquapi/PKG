@@ -83,10 +83,9 @@ public final class Pen extends JPanel {
      */
 
     public void setColor(Color c) {
-        k.add((e) -> e.setColor(c));
+        k.add(e -> e.setColor(c));
         drawerG.setColor(c);  
     }
-
     /**
      * @param locateX new x location
      * @param locateY new y location
@@ -94,7 +93,7 @@ public final class Pen extends JPanel {
      */
 
     public void goTo(int locateX, int locateY) {
-        k.add((e) -> e.goTo(locateX, locateY));
+        k.add(e -> e.goTo(locateX, locateY));
         this.locateX = locateX;
         this.locateY = locateY;
     }
@@ -106,7 +105,7 @@ public final class Pen extends JPanel {
      */
 
     public void penup() {
-        k.add((e) -> e.penup());
+        k.add(e -> e.penup());
         penup = true;
     }
 
@@ -117,7 +116,7 @@ public final class Pen extends JPanel {
      */
 
     public void pendown() {
-        k.add((e) -> e.pendown());
+        k.add(e -> e.pendown());
         penup = false;
     }
 
@@ -128,7 +127,7 @@ public final class Pen extends JPanel {
      */
 
     public void drawLine(int newX, int newY) {
-        k.add((e) -> e.drawLine(newX, newY));
+        k.add(e -> e.drawLine(newX, newY));
         if (!penup)
             drawerG.drawLine(this.locateX, this.locateY, newX, newY);
         goTo(newX, newY);
@@ -141,7 +140,7 @@ public final class Pen extends JPanel {
      */
 
     public void rotate(int degree) {
-        k.add((e) -> e.rotate(degree));
+        k.add(e -> e.rotate(degree));
         this.degree = this.degree + degree;
     }
 
