@@ -5,6 +5,8 @@ import java.awt.Color;
 import javax.swing.JFrame;
 import javax.swing.WindowConstants;
 
+import com.pkg.util.async.Promise;
+
 import com.pkg.awt.Pen;
 import com.pkg.math.Complex;
 import com.pkg.math.Fraction;
@@ -56,3 +58,14 @@ class FractionsTest {
         System.out.println(x);
     }
 } 
+
+class Async {
+    public static void main(String[] args) throws Exception {
+        new Promise<Void>((res, rej) -> {
+            System.out.print("15 + 7 = 22");
+            res.resolve(null);
+        });
+
+        System.out.println("Wait I'm calculating!");
+    }
+}
