@@ -1,6 +1,9 @@
 package com.pkg.util.async;
 
-public class Promise<T> extends Thread {
+/**
+ * A Promise implementation.
+ */
+public final class Promise<T> extends Thread {
     private Resolver<T, Exception> resolver;
     private T value;
     private PromiseState state;
@@ -22,7 +25,7 @@ public class Promise<T> extends Thread {
      * 
      * @return the Promise state
      */
-    public PromiseState state() {
+    public final synchronized PromiseState state() {
         return state;
     }
 
@@ -32,9 +35,18 @@ public class Promise<T> extends Thread {
      * @param value the initial value
      */
     public Promise(T value) {
-        this((res, rej) -> res.resolve(value));
+        this((res, rej) -> {
+            try {
+                res.resolve(value);
+            } catch (Exception e) {
+                rej.reject(e);
+            }
+        });
     }
 
+    /**
+     * Start the promise. This method is called by the constructor
+     */
     public void run() {
         // Change the finish to true
         resolver.run(
@@ -84,7 +96,7 @@ public class Promise<T> extends Thread {
      * @param hnd The handler
      * @return a new Promise
      */
-    public <R> Promise<R> then(Handler<T, R> hnd) {
+    public synchronized <R> Promise<R> then(Handler<T, R> hnd) {
         return new Promise<>((res, rej) -> {
             try {
                 res.resolve(hnd.handler(await()));
