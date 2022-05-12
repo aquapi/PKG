@@ -36,25 +36,21 @@ public class Promise<T> extends Thread {
     }
 
     public void run() {
-        final boolean[] finish = { false };
-
         // Change the finish to true
         resolver.run(
                 value -> {
                     this.value = value;
-                    finish[0] = true;
+                    state = PromiseState.RESOLVED;
                 },
                 exc -> {
                     this.exc = exc;
-                    finish[0] = true;
+                    state = PromiseState.REJECTED;
                 });
 
         // While the resolver is not finish
-        while (!finish[0])
+        while (state == PromiseState.PENDING)
             Thread.yield();
 
-        // Then set the state and remove the resolver
-        state = exc != null ? PromiseState.REJECTED : PromiseState.RESOLVED;
         resolver = null;
     }
 
